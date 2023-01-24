@@ -63,7 +63,17 @@
                 .then(response => response.json())
                 .then(result => {
                     if(result.token != false) {
+                        console.log(token)
                         // save credentials
+                        if(!token) {
+                            Toastify({
+                                text: "Une erreur inconnue est survenue, veuillez réessayer.",
+                                className: "notification error",
+                                gravity: "bottom",
+                                backgroundColor: "red",
+                            }).showToast();
+                            return;
+                        }
                         localStorage.setItem('loginData', JSON.stringify(loginData))
                         localStorage.setItem('token', result.token)
 
@@ -81,6 +91,22 @@
                         else if (result.error == "('Decryption failed while trying to un pad. (probably bad decryption key/iv)', 'exception happened during login -> probably bad username/password')") {
                             Toastify({
                                 text: "Identifiants incorrects.",
+                                className: "notification error",
+                                gravity: "bottom",
+                                backgroundColor: "red",
+                            }).showToast();
+                        }
+                        else if (result.error.includes("probably wrong login information")) {
+                            Toastify({
+                                text: "Impossible de se connecter à l'ENT, veuillez vérifier vos identifiants.\nSi vos identifiants sont corrects, vérifiez l'ENT que vous avez sélectionné.",
+                                className: "notification error",
+                                gravity: "bottom",
+                                backgroundColor: "red",
+                            }).showToast();
+                        }
+                        else if (result.error == "Status code: 404") {
+                            Toastify({
+                                text: "L'URL pronote indiquée est invalide, veuillez la vérifier (pensez au /eleve.html à la fin de l'URL).",
                                 className: "notification error",
                                 gravity: "bottom",
                                 backgroundColor: "red",
