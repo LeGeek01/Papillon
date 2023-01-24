@@ -77,7 +77,7 @@
                         localStorage.setItem('loginData', JSON.stringify(loginData))
                         localStorage.setItem('token', result.token)
 
-                        // redirect to home
+                        redirect to home
                         location.href = '/';
                     } else {
                         if(result.error.split('(')[0] == "HTTPSConnectionPool") {
